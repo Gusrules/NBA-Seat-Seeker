@@ -1,0 +1,172 @@
+CREATE TABLE Seat_type (
+    TypeID int NOT NULL PRIMARY KEY,
+    Price int NOT NULL,
+    TypeName varchar(25)
+);
+
+CREATE TABLE Seat (
+    SeatNumber int AUTO_INCREMENT,
+    Availability varchar(10),
+  	PRIMARY KEY (SeatNumber)	
+);
+
+CREATE TABLE Stadium (
+    StadiumID int AUTO_INCREMENT,
+    City varchar(25),
+    Name varchar(25),
+    Number int NOT NULL,
+  	PRIMARY KEY (StadiumID)
+);
+
+CREATE TABLE Discount (
+    DiscountID int NOT NULL PRIMARY KEY,
+    DiscountName varchar(25),
+    DiscountPrice int
+);
+
+CREATE TABLE Matches (
+    MatchID int AUTO_INCREMENT,
+  	PRIMARY KEY (MatchID)
+);
+
+CREATE TABLE Teams (
+    TeamsID int AUTO_INCREMENT,
+    TeamName varchar(25),
+    Coaches varchar(25),
+    PlayerNames varchar(25),
+  	PRIMARY KEY (TeamsID)
+);
+
+
+CREATE TABLE Schedule (
+  StartTime varchar(20),
+  EndTime varchar(20),
+  MatchID int NOT NULL, 
+  TeamsID int NOT NULL, 
+  FOREIGN KEY (MatchID) REFERENCES Matches(MatchID),
+  FOREIGN KEY (TeamsID) REFERENCES Teams(TeamsID)
+ ); 
+
+CREATE TABLE Customer (
+    CustomerID int AUTO_INCREMENT,
+    LastName varchar(25),
+    FirstName varchar(25),
+    PhoneNumber int,
+    Age int,
+  	PRIMARY KEY (CustomerID)
+);
+
+CREATE TABLE Ticket (
+    TicketID int NOT NULL PRIMARY KEY,
+	CustomerID int NOT NULL,
+  	StadiumID int NOT NULL,
+  	DiscountID int, 
+  	MatchID int NOT NULL,
+      FOREIGN KEY (StadiumID) REFERENCES Stadium(StadiumID),
+      FOREIGN KEY (DiscountID) REFERENCES Discount(DiscountID),
+      FOREIGN KEY (MatchID) REFERENCES Matches(MatchID)
+);
+
+INSERT INTO Customer (CustomerID, LastName, FirstName, PhoneNumber, Age) VALUES (1,'Papadakis', 'Panagiotis', 1111111, 20);
+INSERT INTO Customer (CustomerID, LastName, FirstName, PhoneNumber, Age) VALUES (2,'Volasimakis', 'Nikolas', 4444444, 7);
+INSERT INTO Customer (CustomerID, LastName, FirstName, PhoneNumber, Age) VALUES (3,'Fountoulakos', 'Xarhs', 2222222, 13);
+INSERT INTO Customer (CustomerID, LastName, FirstName, PhoneNumber, Age) VALUES (4,'Papadakis', 'Giwrgos', 8888888, 69);
+INSERT INTO Customer (CustomerID, LastName, FirstName, PhoneNumber, Age) VALUES (5,'Antwniou', 'Andreas', 5555555, 45);
+INSERT INTO Customer (CustomerID, LastName, FirstName, PhoneNumber, Age) VALUES (6,'Karameta', 'Alexandros', 6666666, 10);
+INSERT INTO Customer (CustomerID,LastName, FirstName, PhoneNumber, Age) VALUES (7,'Panagiotopoulos', 'Spyros', 3333333, 35);
+
+INSERT INTO Discount (DiscountID, DiscountName, DiscountPrice) VALUES (1,'PAIDIKO', 30);
+INSERT INTO Discount (DiscountID, DiscountName, DiscountPrice) VALUES (2,'HLIKIOMENOI', 20);
+INSERT INTO Discount (DiscountID, DiscountName, DiscountPrice) VALUES (3,'KANONIKO', 0);
+
+INSERT INTO Seat (SeatNumber, Availability) VALUES (1,'Yes');
+INSERT INTO Seat (SeatNumber, Availability) VALUES (2,'Yes');
+INSERT INTO Seat (SeatNumber, Availability) VALUES (3,'No');
+INSERT INTO Seat (SeatNumber, Availability) VALUES (4,'Yes');
+INSERT INTO Seat (SeatNumber, Availability) VALUES (5,'Yes');
+INSERT INTO Seat (SeatNumber, Availability) VALUES (6,'No');
+
+INSERT INTO Seat_type (TypeID, Price, TypeName) VALUES (1, 60, 'ECONOMY');
+INSERT INTO Seat_type (TypeID, Price, TypeName) VALUES (2, 80, 'STANDARD');
+INSERT INTO Seat_type (TypeID, Price, TypeName) VALUES (3, 120, 'VIP');
+
+INSERT INTO Matches (MatchID) VALUES (1),(2),(3),(4),(5);
+
+INSERT INTO Stadium (StadiumID, City, Name, Number) VALUES (1,'LOS ANGELES', 'Crypto.comArena',12121212);
+INSERT INTO Stadium (StadiumID, City, Name, Number) VALUES (2,'NEW YORK', 'MADISON SQUARE GARDEN',13131313);
+INSERT INTO Stadium (StadiumID, City, Name, Number) VALUES (3,'MILWAUKEE', 'FISERV FORUM',14141414);
+INSERT INTO Stadium (StadiumID, City, Name, Number) VALUES (4,'CHICAGO', 'UNITED CENTER',15151515);
+INSERT INTO Stadium (StadiumID, City, Name, Number) VALUES (5,'BROOKLYN', 'BARCLAYS CENTER',16161616);
+INSERT INTO Stadium (StadiumID, City, Name, Number) VALUES (6,'BOSTON', 'TD GARDEN',17171717);
+
+INSERT INTO Teams (TeamsID, TeamName, Coaches, PlayerNames) VALUES (1,'LAKERS', 'Ty Lue', 'LeBron James, Russel Westbrook, Anthony Davis, Austin Rivers, Dennis Schroeder');
+INSERT INTO Teams (TeamsID, TeamName, Coaches, PlayerNames) VALUES (2,'KNICKS', 'Tom Thibodeau', 'Ryan Arcidiacono, RJ Barrett, Evan Fournier, Quentin Grimes, Mitchell Robinson');
+INSERT INTO Teams (TeamsID, TeamName, Coaches, PlayerNames) VALUES (3,'BUCKS', 'Mike Budenholzer', 'Giannis Antetokounmpo, Thanasis Antetokounmpo, MarJon Beauchamp, Jrue Holiday, Sandro Mamukelashvili');
+INSERT INTO Teams (TeamsID, TeamName, Coaches, PlayerNames) VALUES (4,'BULLS', 'Billy Donovan', 'Michael Jordan, Lonzo Ball, Tony Bradley, Alex Caruso, Ayo Dosunmu');
+INSERT INTO Teams (TeamsID, TeamName, Coaches, PlayerNames) VALUES (5,'NETS', 'Steve Nash', 'Nic Claxton, Seth Curry, David Duke Jr. , Kevin Durant, Kyrie Irving');
+INSERT INTO Teams (TeamsID, TeamName, Coaches, PlayerNames) VALUES (6,'CELTICS', 'Joe Mashulla', 'Jayson Tatum, Marcus Smart, Payton Pritchard, Blake Griffin, Jaylen Brown');
+
+
+INSERT INTO Ticket (TicketID, CustomerID, StadiumID, DiscountID, MatchID) VALUES (1,1,1,3,1);
+INSERT INTO Ticket (TicketID, CustomerID, StadiumID, DiscountID, MatchID) VALUES (2,2,2,1,2);
+INSERT INTO Ticket (TicketID, CustomerID, StadiumID, DiscountID, MatchID) VALUES (3,3,3,1,3);
+INSERT INTO Ticket (TicketID, CustomerID, StadiumID, DiscountID, MatchID) VALUES (4,4,5,2,4);
+INSERT INTO Ticket (TicketID, CustomerID, StadiumID, DiscountID, MatchID) VALUES (5,5,4,3,2);
+INSERT INTO Ticket (TicketID, CustomerID, StadiumID, DiscountID, MatchID) VALUES (6,6,4,1,2);
+
+
+INSERT INTO Schedule (StartTime, EndTime, MatchID, TeamsID) VALUES ('18:00', '20:00', 1, 1);
+ INSERT INTO Schedule (StartTime, EndTime, MatchID, TeamsID) VALUES ('15:00', '17:00', 2, 2);
+ INSERT INTO Schedule (StartTime, EndTime, MatchID, TeamsID) VALUES ('12:00', '14:00', 3, 3);
+ INSERT INTO Schedule (StartTime, EndTime, MatchID, TeamsID) VALUES ('18:30', '20:30', 4, 4);
+ INSERT INTO Schedule (StartTime, EndTime, MatchID, TeamsID) VALUES ('18:00', '20:00', 5, 5);
+
+-- Εμφάνισε το στάδιο στην πόλη MILWAUKEE
+SELECT * FROM Stadium
+WHERE City = 'MILWAUKEE';
+
+-- Δείξε μου τους θεατές που είναι άνω των 22 ετών με αύξουσα σειρά
+SELECT * FROM Customer 
+WHERE age > 22
+ORDER BY age;
+
+-- Δείξε μου πόσα στάδια υπάρχουν
+SELECT COUNT(StadiumID) FROM Stadium;
+
+-- Ποιός είναι ο μέσος όρος ηλικίας των θεατών στην βάση δεδομένων ?
+SELECT AVG(Age) FROM Customer;
+
+-- Εμφάνισε μου τα ονόματα όλων των ομάδων με αλφαβιτική σειρά 
+SELECT TeamName FROM Teams 
+GROUP BY TeamName;
+
+-- Πόσα παιδικά εισιτήρια υπάρχουν για MatchID = 2 
+SELECT COUNT(Ticket.DiscountID) 
+FROM Ticket JOIN Discount 
+ON Discount.DiscountID = Ticket.DiscountID 
+JOIN Matches 
+ON Ticket.MatchID = Matches.MatchID 
+WHERE Discount.DiscountName = 'PAIDIKO' AND Ticket.MatchID = 2;
+
+-- Εμφάνισε μου το όνομα, επίθετο και ηλικία των θεατών εχόντας σε αλφαβιτική σειρά τα επίθετα τους και στην συνέχεια τα ονόματα τους
+SELECT FirstName, LastName, Age FROM Customer 
+GROUP BY LastName, FirstName;
+
+-- Δείξε μου τα στάδια στα οποιά έχουν κοπεί εισιτήρια με αλφαβιτική σειρά  
+SELECT Stadium.Name FROM Stadium 
+JOIN Ticket ON Stadium.StadiumID = Ticket.StadiumID
+GROUP BY Stadium.Name;
+
+-- Εμφάνισε όλα τα εισιτήρια των αγώνων που θα γίνουν στο στάδιο Crypto.comArena 
+SELECT Ticket.*, Stadium.Name FROM Ticket 
+JOIN Stadium 
+ON ticket.StadiumID = Stadium.StadiumID
+WHERE Stadium.Name = 'Crypto.comArena';
+
+-- Εμφάνισε μου το προγραμμα των αγώνων που ξεκινάνε στις 18:00 με σειρα ID τους. 
+SELECT * FROM Schedule
+WHERE StartTime = '18:00'
+ORDER BY MatchID;
+
+
+
